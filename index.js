@@ -28,15 +28,11 @@ document
 document.getElementById("draw-rect").addEventListener("click", drawRectangle);
 document.getElementById("draw-circle").addEventListener("click", drawCircle);
 document.getElementById("move-tool").addEventListener("click", toggleMoveTool);
-// document.getElementById("undoBtn").addEventListener("click", undo);
-// document.getElementById("redoBtn").addEventListener("click", redo);
 document.getElementById("zoom-in-btn").addEventListener("click", zoomIn);
 document.getElementById("zoom-out-btn").addEventListener("click", zoomOut);
 document
     .querySelector("#selection-tool")
     .addEventListener("click", () => toggleMoveTool);
-document.getElementById("undoBtn").addEventListener("click", undo);
-document.getElementById("redoBtn").addEventListener("click", redo);
 
 //creating new canvas
 const canvas = new fabric.Canvas("canvas", {
@@ -128,6 +124,12 @@ function updateDrawingProperty(event) {
     canvas.isDrawingMode = event.target.value === "stroke";
 }
 
+function erase() {
+    canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
+    canvas.freeDrawingBrush.width = 10;
+    canvas.isDrawingMode = true;
+}
+
 // toolbar
 
 function toggleMoveTool() {
@@ -151,6 +153,8 @@ function toggleMoveTool() {
 }
 
 function updateBrushType(event) {
+    canvas.isDrawingMode = true;
+
     const selectedBrushType = event.target.value;
     switch (selectedBrushType) {
         case "PencilBrush":
@@ -430,3 +434,6 @@ const redo = () => {
         });
     }
 };
+
+document.getElementById("undoBtn").addEventListener("click", undo);
+document.getElementById("redoBtn").addEventListener("click", redo);

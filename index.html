@@ -30,6 +30,7 @@
                 <option value="WebBrush">Web</option>
             </select>
             <input type="range" id="stroke-width" min="1" max="30" value="1">
+            <button onclick="erase()">Erase</button>
             <input type="color" id="color" value="#000000">
 
             <!-- <button id="draw-circle">Draw Circle</button>
@@ -81,12 +82,16 @@
                 </div>
             </div>
             <div class="flex items-center">
-                <img class="h-[40px]" src="assets/text.svg" alt="" id="text-input" onclick="drawText()">
-                <!-- <button id=" " onclick="toggleMoveTool()">Selection tool</button> -->
-                <img class="h-[40px]" src="assets/download.svg" alt="" id="download-btn" onclick="downloadCanvas()">
-                <img class="h-[40px]" src="assets/eraser-tool.svg" alt="" id="clear-button" onclick="clearCanvas()">
+                <div class="flex items-center justify-evenly h-full w-16 flex-wrap img-div">
+                    <img class="h-[40px]" src="assets/text.svg" alt="" id="text-input" onclick="drawText()">
+                </div>
+                <div class="flex items-center justify-evenly h-full w-16 flex-wrap img-div">
+                    <img class="h-[40px]" src="assets/download.svg" alt="" id="download-btn" onclick="downloadCanvas()">
+                </div>
+                <div class="flex items-center justify-evenly h-full w-16 flex-wrap img-div">
+                    <img class="h-[40px]" src="assets/eraser-tool.svg" alt="" id="clear-button" onclick="clearCanvas()">
+                </div>
             </div>
-
             <div
                 class="flex flex-col justify-evenly items-center border- border-l-[1px] border-gray-200 hover overflow-hidden">
                 <img class="h-full object-contain w-[42px] pl-3 pr-3 pt-1" src="assets/undo.svg" alt="" id="undoBtn">
@@ -94,7 +99,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Zoom Functionality -->
     <div
@@ -109,7 +113,7 @@
         </div>
 
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script src="fabric.min.js"></script>
     <script src="fabric.brushes.min.js"></script>
     <script src="index.js"></script>
 
