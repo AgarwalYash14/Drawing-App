@@ -35,6 +35,8 @@ document.getElementById("zoom-out-btn").addEventListener("click", zoomOut);
 document
     .querySelector("#selection-tool")
     .addEventListener("click", () => toggleMoveTool);
+document.getElementById("undoBtn").addEventListener("click", undo);
+document.getElementById("redoBtn").addEventListener("click", redo);
 
 //creating new canvas
 const canvas = new fabric.Canvas("canvas", {
@@ -92,28 +94,9 @@ canvas.on("mouse:wheel", (opt) => {
     }
 });
 
-// Handling selection event
-canvas.on("selection:created", function (opt) {
-    console.log("Selection created:", opt);
-});
-
-// Handling deselection event
-canvas.on("selection:cleared", function (opt) {
-    console.log("Selection cleared");
-});
-
-// Drawing functions
-function drawText(event) {
-    if (event.key === "Enter") {
-        const text = new fabric.Textbox(event.target.value, {
-            left: 50,
-            top: 50,
-            fill: canvas.freeDrawingBrush.color,
-            editable: true,
-        });
-        canvas.add(text);
-        event.target.value = "";
-    }
+// Update functions
+function updateColor(event) {
+    canvas.freeDrawingBrush.color = event.target.value;
 }
 
 function handleColorChange() {
@@ -137,85 +120,34 @@ colorPicker.addEventListener("change", handleColorChange);
 
 handleColorChange();
 
-function drawRectangle() {
-    canvas.isDrawingMode = false;
-    let startX, startY, rectangle; // Variables to store initial mouse position and rectangle object
-
-    // Event listener for mouse down
-    canvas.on("mouse:down", function (options) {
-        const pointer = canvas.getPointer(options.e);
-        startX = pointer.x;
-        startY = pointer.y;
-
-        // Check if there's an existing rectangle
-        const existingRectangle = canvas.getActiveObject();
-        if (existingRectangle && existingRectangle.type === "rect") {
-            rectangle = existingRectangle;
-        } else {
-            // Create a new rectangle
-            rectangle = new fabric.Rect({
-                left: startX,
-                top: startY,
-                width: 1,
-                height: 1,
-                fill: canvas.freeDrawingBrush.color,
-                // stroke: canvas.freeDrawingBrush.color,
-                // strokeWidth: canvas.freeDrawingBrush.width,
-            });
-
-            // Add rectangle to canvas
-            canvas.add(rectangle);
-        }
-    });
-
-    // Event listener for mouse move
-    canvas.on("mouse:move", function (options) {
-        if (!rectangle) return;
-
-        const pointer = canvas.getPointer(options.e);
-        const width = pointer.x - startX;
-        const height = pointer.y - startY;
-
-        // Update rectangle dimensions
-        rectangle.set({ width: width, height: height });
-        canvas.renderAll(); // Render canvas
-    });
-
-    // Event listener for mouse up
-    canvas.on("mouse:up", function () {
-        startX = null;
-        startY = null;
-        rectangle = null;
-        canvas.isDrawingMode = true;
-    });
-}
-
-function drawCircle() {
-    canvas.isDrawingMode = false;
-    const listener = (options) => {
-        const circle = new fabric.Circle({
-            left: options.pointer.x,
-            top: options.pointer.y,
-            radius: 50,
-            fill: canvas.freeDrawingBrush.color,
-            stroke: canvas.freeDrawingBrush.color,
-            strokeWidth: canvas.freeDrawingBrush.width,
-        });
-        canvas.add(circle);
-        canvas.isDrawingMode = true;
-        canvas.off("mouse:up", listener);
-    };
-
-    canvas.on("mouse:up", listener);
-}
-
-// Update functions
-function updateColor(event) {
-    canvas.freeDrawingBrush.color = event.target.value;
-}
-
 function updateStrokeWidth(event) {
     canvas.freeDrawingBrush.width = parseInt(event.target.value, 10);
+}
+
+function updateDrawingProperty(event) {
+    canvas.isDrawingMode = event.target.value === "stroke";
+}
+
+// toolbar
+
+function toggleMoveTool() {
+    isMoving = !isMoving;
+    canvas.selection = isMoving;
+    canvas.forEachObject((obj) => {
+        obj.set({
+            selectable: isMoving,
+        });
+    });
+
+    if (isMoving) {
+        document.getElementById("move-tool").textContent = "Drawing Mode";
+        canvas.isDrawingMode = false;
+
+        console.log(" ... ");
+    } else {
+        document.getElementById("move-tool").textContent = "Selection Mode";
+        canvas.isDrawingMode = true;
+    }
 }
 
 function updateBrushType(event) {
@@ -312,75 +244,90 @@ function updateBrushType(event) {
     }
 }
 
-function updateDrawingProperty(event) {
-    canvas.isDrawingMode = event.target.value === "stroke";
-}
+function drawRectangle() {
+    canvas.isDrawingMode = false;
+    let startX, startY, rectangle; // Variables to store initial mouse position and rectangle object
 
-function clearCanvas() {
-    canvas.clear();
-}
+    // Event listener for mouse down
+    canvas.on("mouse:down", function (options) {
+        const pointer = canvas.getPointer(options.e);
+        startX = pointer.x;
+        startY = pointer.y;
 
-function downloadCanvas() {
-    const link = document.createElement("a");
-    link.download = "drawing.png";
-    link.href = canvas.toDataURL({
-        format: "png",
-        quality: 1,
+        // Check if there's an existing rectangle
+        const existingRectangle = canvas.getActiveObject();
+        if (existingRectangle && existingRectangle.type === "rect") {
+            rectangle = existingRectangle;
+        } else {
+            // Create a new rectangle
+            rectangle = new fabric.Rect({
+                left: startX,
+                top: startY,
+                width: 1,
+                height: 1,
+                fill: canvas.freeDrawingBrush.color,
+                // stroke: canvas.freeDrawingBrush.color,
+                // strokeWidth: canvas.freeDrawingBrush.width,
+            });
+
+            // Add rectangle to canvas
+            canvas.add(rectangle);
+        }
     });
-    link.click();
-}
 
-function toggleMoveTool() {
-    isMoving = !isMoving;
-    canvas.selection = isMoving;
-    canvas.forEachObject((obj) => {
-        obj.set({
-            selectable: isMoving,
-        });
+    // Event listener for mouse move
+    canvas.on("mouse:move", function (options) {
+        if (!rectangle) return;
+
+        const pointer = canvas.getPointer(options.e);
+        const width = pointer.x - startX;
+        const height = pointer.y - startY;
+
+        // Update rectangle dimensions
+        rectangle.set({ width: width, height: height });
+        canvas.renderAll(); // Render canvas
     });
 
-    if (isMoving) {
-        document.getElementById("move-tool").textContent = "Drawing Mode";
-        canvas.isDrawingMode = false;
-
-        console.log(" ... ");
-    } else {
-        document.getElementById("move-tool").textContent = "Selection Mode";
+    // Event listener for mouse up
+    canvas.on("mouse:up", function () {
+        startX = null;
+        startY = null;
+        rectangle = null;
         canvas.isDrawingMode = true;
-    }
+    });
 }
 
-// Undo and Redo functions
-const saveState = () => {
-    index++;
-    state[index] = JSON.stringify(canvas);
-    if (index < state.length - 1) {
-        state.splice(index + 1, state.length - index - 1);
-    }
-};
-
-const undo = () => {
-    if (index > 0) {
-        index--;
-        canvas.clear();
-        canvas.loadFromJSON(state[index], () => {
-            canvas.renderAll();
+function drawCircle() {
+    canvas.isDrawingMode = false;
+    const listener = (options) => {
+        const circle = new fabric.Circle({
+            left: options.pointer.x,
+            top: options.pointer.y,
+            radius: 50,
+            fill: canvas.freeDrawingBrush.color,
+            stroke: canvas.freeDrawingBrush.color,
+            strokeWidth: canvas.freeDrawingBrush.width,
         });
-    }
-};
+        canvas.add(circle);
+        canvas.isDrawingMode = true;
+        canvas.off("mouse:up", listener);
+    };
 
-const redo = () => {
-    if (index < state.length - 1) {
-        index++;
-        canvas.clear();
-        canvas.loadFromJSON(state[index], () => {
-            canvas.renderAll();
+    canvas.on("mouse:up", listener);
+}
+
+function drawText(event) {
+    if (event.key === "Enter") {
+        const text = new fabric.Textbox(event.target.value, {
+            left: 50,
+            top: 50,
+            fill: canvas.freeDrawingBrush.color,
+            editable: true,
         });
+        canvas.add(text);
+        event.target.value = "";
     }
-};
-
-document.getElementById("undoBtn").addEventListener("click", undo);
-document.getElementById("redoBtn").addEventListener("click", redo);
+}
 
 function getZoomPoint(event) {
     const canvasRect = canvas.getElement().getBoundingClientRect();
@@ -440,3 +387,46 @@ function zoom(scaleFactor, zoomPoint) {
 
     canvas.setViewportTransform(newVpt);
 }
+
+function downloadCanvas() {
+    const link = document.createElement("a");
+    link.download = "drawing.png";
+    link.href = canvas.toDataURL({
+        format: "png",
+        quality: 1,
+    });
+    link.click();
+}
+
+function clearCanvas() {
+    canvas.clear();
+}
+
+// Undo and Redo functions
+const saveState = () => {
+    index++;
+    state[index] = JSON.stringify(canvas);
+    if (index < state.length - 1) {
+        state.splice(index + 1, state.length - index - 1);
+    }
+};
+
+const undo = () => {
+    if (index > 0) {
+        index--;
+        canvas.clear();
+        canvas.loadFromJSON(state[index], () => {
+            canvas.renderAll();
+        });
+    }
+};
+
+const redo = () => {
+    if (index < state.length - 1) {
+        index++;
+        canvas.clear();
+        canvas.loadFromJSON(state[index], () => {
+            canvas.renderAll();
+        });
+    }
+};
