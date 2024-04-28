@@ -1,6 +1,72 @@
-/* body {
-    cursor: url(pencil.png) -10 25, auto;
-} */
+@font-face {
+    font-family: "Goia Bold";
+    src: url(fonts/GoiaDisplay-ExtraBold.otf);
+}
+
+body {
+    /* cursor: url(pencil.png) -10 25, auto; */
+    font-family: "Goia Bold", sans-serif;
+    font-weight: 700;
+    color: #111;
+    /* overflow-y: hidden; */
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.bg {
+    background: url(assets/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#svg {
+    overflow: visible;
+    height: 100%;
+    transform: translateZ(0);
+}
+
+#path {
+    stroke-width: 2;
+    stroke: gray;
+    fill: none;
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+#container::-webkit-scrollbar {
+    width: 0;
+}
+
+section {
+    height: 100vh;
+    scroll-snap-align: start;
+}
+
+/* Styling the color input */
+
+#selection-tool.active,
+#hand-tool.active,
+#undoBtn.active,
+#redoBtn.active {
+    background-color: #9747ff; /* Change to the desired background color */
+}
+
+input[type="color"] {
+    border-radius: 25px;
+    height: 30px;
+    width: 30px;
+}
+
 input[type="range"] {
     width: 68px;
     margin: 4.3px 0;
