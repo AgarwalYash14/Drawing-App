@@ -1,63 +1,6 @@
-                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-<br/>
 <div align="center">
 
-<h3 align="center">DRAWING APP</h3>
+<h1 align="center"><b>DRAWING APP</b></h1>
 <p align="center">
 "Unleash Your Creativity: A Digital Canvas Awaits!"
 
@@ -78,7 +21,7 @@ It is a lightweight online drawing application built using HTML, CSS, and JavaSc
 
 This project is made using:
 
-- [HTML](https://nextjs.org)
+- [HTML](https://html.com/)
 - [CSS](https://www.w3.org/Style/CSS/)
 - [JavaScript](https://www.javascript.com/)
 - [Fabric.js](http://fabricjs.com/)
