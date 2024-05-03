@@ -6,7 +6,7 @@
 
 <br/>
 <br/>
-<a href="https://github-yashagarwal.github.io/Drawing-App/">View Demo .</a>  
+<a href="https://github-yashagarwal.github.io/Drawing-App/" target="_blank">View Demo .</a>  
 <a href="https://github.com/GitHub-YashAgarwal/Drawing-App/issues/new">Report Bug .</a>
 <a href="https://github.com/GitHub-YashAgarwal/Drawing-App/issues/new">Request Feature</a>
 <br>
@@ -16,6 +16,7 @@
  ## About The Project
 
 ![Product Screenshot](https://i.postimg.cc/90zfrVpH/Screenshot-2024-05-03-105700.png)
+![Product Screenshot](https://i.postimg.cc/g2Q955B2/Screenshot-2024-05-03-150246.png)
 
 <p align="justify">It is a lightweight online drawing application built using HTML, CSS, and JavaScript, empowered by Fabric.js and Tailwind CSS. With a user-friendly interface and a range of features, It offers a seamless digital canvas for unleashing your creativity.</p>
 
