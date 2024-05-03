@@ -1,4 +1,59 @@
-<p align="center"><img src="https://socialify.git.ci/GitHub-YashAgarwal/Drawing-App/image?description=1&amp;descriptionEditable=Tech%20Stack%20-%20HTML%2C%20CSS%2C%20JavaScript%2C%20Fabric.js%2C%20GSAP%2C%20Tailwind%20CSS&amp;font=Jost&amp;name=1&amp;owner=1&amp;pattern=Circuit%20Board&amp;theme=Auto" alt="project-image"></p>
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 <br/>
 <div align="center">
 
@@ -8,7 +63,7 @@
 
 <br/>
 <br/>
-<a href="https://github.com/ShaanCoding/ReadME-Generator/">View Demo .</a>  
+<a href="https://github-yashagarwal.github.io/Drawing-App/">View Demo .</a>  
 <a href="https://github.com/GitHub-YashAgarwal/Drawing-App/issues/new">Report Bug .</a>
 <a href="https://github.com/GitHub-YashAgarwal/Drawing-App/issues/new">Request Feature</a>
 </p>
