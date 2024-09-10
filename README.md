@@ -6,9 +6,9 @@
 
 <br/>
 <br/>
-<a href="https://github-yashagarwal.github.io/Drawing-App/" target="_blank">View Demo .</a>  
-<a href="https://github.com/GitHub-YashAgarwal/Drawing-App/issues/new">Report Bug .</a>
-<a href="https://github.com/GitHub-YashAgarwal/Drawing-App/issues/new">Request Feature</a>
+<a href="https://agarwalyash14.github.io/Drawing-App/" target="_blank">View Demo .</a>  
+<a href="https://github.com/AgarwalYash14/Drawing-App/issues/new">Report Bug .</a>
+<a href="https://github.com/AgarwalYash14/Drawing-App/issues/new">Request Feature</a>
 <br>
 </p>
 </div>
