@@ -1,5 +1,4 @@
 const canvasElement = document.getElementById("canvas");
-canvasElement.willReadFrequently = true;
 
 const colorPicker = document.getElementById("color");
 const shapesSVGs = document.querySelectorAll(".shapes-svg");
@@ -60,6 +59,10 @@ let zoomLevel = 1;
 
 let history = [];
 let historyIndex = 0;
+
+function scrollToTop() {
+    document.getElementById("page1").scrollIntoView();
+}
 
 document
     .getElementById("draw-rect")
@@ -605,8 +608,8 @@ function redo() {
     }
 }
 
-document.getElementById("undoBtn").addEventListener("click", undo);
-document.getElementById("redoBtn").addEventListener("click", redo);
+// document.getElementById("undoBtn").addEventListener("click", undo);
+// document.getElementById("redoBtn").addEventListener("click", redo);
 
 canvas.on("object:added", (e) => saveState("added", e.target));
 canvas.on("object:removed", (e) => saveState("removed", e.target));
